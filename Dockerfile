@@ -1,6 +1,5 @@
 FROM alpine:3.5
 
-ENV PATH /opt/gitolite/src:$PATH
 ENV GITOLITE_SRC https://github.com/sitaramc/gitolite.git
 
 # Install dependencies and tweak the openssh config
@@ -20,7 +19,8 @@ VOLUME /etc/ssh/keys
 VOLUME /var/lib/git
 
 # Install from the stable master branch
-RUN git clone --depth 1 $GITOLITE_SRC /opt/gitolite
+RUN git clone --depth 1 $GITOLITE_SRC /opt/gitolite \
+ && /opt/gitolite/install -ln /usr/local/bin
 
 # Entrypoint responsible for SSH host keys generation, and Gitolite data initialization
 COPY docker-entrypoint.sh /
