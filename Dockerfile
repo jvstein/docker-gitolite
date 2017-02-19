@@ -19,8 +19,9 @@ VOLUME /etc/ssh/keys
 VOLUME /var/lib/git
 
 # Install from the stable master branch
-RUN git clone --depth 1 $GITOLITE_SRC /opt/gitolite \
- && /opt/gitolite/install -ln /usr/local/bin
+RUN git clone $GITOLITE_SRC /opt/gitolite \
+ && /opt/gitolite/install -ln /usr/local/bin \
+ && rm -rf /opt/gitolite/.git
 
 # Entrypoint responsible for SSH host keys generation, and Gitolite data initialization
 COPY docker-entrypoint.sh /
