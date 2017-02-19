@@ -2,7 +2,8 @@
 
 # if command is sshd, set it up correctly
 if [ "${1}" = 'sshd' ]; then
-  set -- /usr/sbin/sshd -D
+  # non-daemon mode, logging to stderr
+  set -- /usr/sbin/sshd -De
 
   # Setup SSH HostKeys if needed
   for algorithm in rsa dsa ecdsa ed25519
