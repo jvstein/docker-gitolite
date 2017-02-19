@@ -5,6 +5,8 @@ FROM alpine:3.5
 RUN set -x \
  && apk add --update gitolite openssh \
  && rm -rf /var/cache/apk/* \
+ && sed -i -E -e "s|^#(HostKey.*/etc/ssh/)|\1keys/|" \
+    -e "s/^#(PermitRootLogin|PasswordAuthentication|PrintMotd).*$/\1 no/" /etc/ssh/sshd_config \
  && passwd -u git
 
 # Volume used to store SSH host keys, generated on first run
