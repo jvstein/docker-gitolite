@@ -4,43 +4,17 @@ This image allows you to run a git server in a container with OpenSSH and [Gitol
 
 Based on Alpine Linux.
 
-## Quick setup
+## Quick Start
+Run gitolite on port 10022, using the current user's RSA key as the new admin,
+with the data stored in `/path/to/data` and the host ssh keys stored in
+`/path/to/keys`.
 
-Create volumes for your SSH server host keys and for your Gitolite config and repositories
-
-* Docker >= 1.9
-
-        docker volume create --name gitolite-sshkeys
-        docker volume create --name gitolite-git
-
-* Docker < 1.9
-
-        docker create --name gitolite-data -v /etc/ssh/keys -v /var/lib/git tianon/true
-        docker run --rm --volumes-from gitolite-data alpine:3.3 chown 1000 /var/lib/git
-
-Setup Gitolite with yourself as the administrator:
-
-* Docker >= 1.10
-
-        docker run --rm -e SSH_KEY="$(cat ~/.ssh/id_rsa.pub)" -e SSH_KEY_NAME="$(whoami)" -v gitolite-sshkeys:/etc/ssh/keys -v gitolite-git:/var/lib/git jgiannuzzi/gitolite
-
-* Docker == 1.9 (There is a bug in `docker run --rm` that removes volumes when removing the container)
-
-        docker run --name gitolite-setup -e SSH_KEY="$(cat ~/.ssh/id_rsa.pub)" -e SSH_KEY_NAME="$(whoami)" -v gitolite-sshkeys:/etc/ssh/keys -v gitolite-git:/var/lib/git jgiannuzzi/gitolite
-        docker rm gitolite-setup
-
-* Docker < 1.9
-
-        docker run --rm -e SSH_KEY="$(cat ~/.ssh/id_rsa.pub)" -e SSH_KEY_NAME="$(whoami)" --volumes-from gitolite-data jgiannuzzi/gitolite
-
-Finally run your Gitolite container in the background:
-
-* Docker >= 1.9
-
-        docker run -d --name gitolite -p 22:22 -v gitolite-sshkeys:/etc/ssh/keys -v gitolite-git:/var/lib/git jgiannuzzi/gitolite
-
-* Docker < 1.9
-
-        docker run -d --name gitolite -p 22:22 --volumes-from gitolite-data jgiannuzzi/gitolite
+    docker run --name gitolite \
+      -v /path/to/keys:/etc/ssh/keys \
+      -v /path/to/data:/var/lib/gitolite \
+      -p 10022:22 \
+      -e SSH_KEY="$(cat ~/.ssh/id_rsa.pub)" \
+      -e SSH_KEY_NAME="$(whoami)" \
+      jvstein/gitolite
 
 You can then add users and repos by following the [official guide](https://github.com/sitaramc/gitolite#adding-users-and-repos).

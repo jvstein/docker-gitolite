@@ -20,7 +20,6 @@ if [ ! -f ~git/.ssh/authorized_keys ]; then
     echo "$SSH_KEY" > "/tmp/$SSH_KEY_NAME.pub"
     su - git -c "gitolite setup -pk \"/tmp/$SSH_KEY_NAME.pub\""
     rm "/tmp/$SSH_KEY_NAME.pub"
-    exit
   else
     echo "You need to specify SSH_KEY on first run to setup gitolite"
     echo "You can also use SSH_KEY_NAME to specify the key name (optional)"
