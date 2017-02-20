@@ -6,7 +6,7 @@ ENV GITOLITE_SRC https://github.com/sitaramc/gitolite.git
 # Create user and group with same ids as the gitolite package
 RUN set -x \
  && apk add --no-cache git perl openssh \
- && sed -i -E -e "s|^#(HostKey.*/etc/ssh/)|\1keys/|" \
+ && sed -i -E -e "s|^#(HostKey.*/etc/ssh/)(ssh_host_.*_key)|\1keys/\2|" \
     -e "s/^#(PermitRootLogin|PasswordAuthentication|PrintMotd).*$/\1 no/" /etc/ssh/sshd_config \
  && addgroup -g 101 git \
  && adduser -u 100 -D -G git -s /bin/sh -h /var/lib/git git \
