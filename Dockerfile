@@ -24,8 +24,8 @@ RUN git clone $GITOLITE_SRC /opt/gitolite \
  && rm -rf /opt/gitolite/.git
 
 # Entrypoint responsible for SSH host keys generation, and Gitolite data initialization
-COPY docker-entrypoint.sh /
-ENTRYPOINT ["/docker-entrypoint.sh"]
+COPY entrypoint.sh /
+ENTRYPOINT ["/entrypoint.sh"]
 
 # Expose port 22 to access SSH
 EXPOSE 22
