@@ -8,8 +8,9 @@ RUN set -x \
  && apk add --no-cache git perl openssh \
  && sed -i -E -e "s|^#(HostKey.*/etc/ssh/)(ssh_host_.*_key)|\1keys/\2|" \
     -e "s/^#(PermitRootLogin|PasswordAuthentication|PrintMotd).*$/\1 no/" /etc/ssh/sshd_config \
- && addgroup -g 1000 git \
- && adduser -u 1000 -S -G git -s /bin/sh -h /var/lib/git git
+ && addgroup git \
+ && adduser -D -G git -s /bin/sh -h /var/lib/git git \
+ && passwd -u git
 
 # Volume used to store SSH host keys, generated on first run
 VOLUME /etc/ssh/keys
