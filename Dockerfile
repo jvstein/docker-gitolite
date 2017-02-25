@@ -3,15 +3,18 @@ FROM alpine:3.4
 ENV GITOLITE_SRC https://github.com/sitaramc/gitolite.git
 ENV GIT_NOTIFIER_SRC https://github.com/rsmmr/git-notifier.git
 
-# Install dependencies and tweak the openssh config
+# Install dependencies
 # Create "git" user and group for ssh logins
 RUN set -x \
  && apk add --no-cache git perl openssh python \
- && sed -i -E -e "s|^#(HostKey.*/etc/ssh/)(ssh_host_.*_key)|\1keys/\2|" \
-    -e "s/^#(PermitRootLogin|PasswordAuthentication|PrintMotd).*$/\1 no/" /etc/ssh/sshd_config \
  && addgroup git \
  && adduser -D -G git -s /bin/sh -h /var/lib/git git \
  && passwd -u git
+
+# Tweak openssh configuration
+RUN set -x \
+ && sed -i -E -e "s|^#(HostKey.*/etc/ssh/)(ssh_host_.*_key)|\1keys/\2|" \
+    -e "s/^#(PermitRootLogin|PasswordAuthentication|PrintMotd).*$/\1 no/" /etc/ssh/sshd_config
 
 # Volume used to store SSH host keys, generated on first run
 VOLUME /etc/ssh/keys
