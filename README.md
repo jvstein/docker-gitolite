@@ -1,6 +1,6 @@
 # Docker image for Gitolite
 
-This image allows you to run a git server in a container with OpenSSH and [Gitolite](https://github.com/sitaramc/gitolite#readme).
+This image allows you to run an OpenSSH server in a container with OpenSSH, [gitolite](https://github.com/sitaramc/gitolite#readme) and [git-notifier](https://github.com/rsmmr/git-notifier#readme).
 
 Based on Alpine Linux.
 

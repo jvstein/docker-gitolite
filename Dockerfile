@@ -1,11 +1,12 @@
 FROM alpine:3.4
 
 ENV GITOLITE_SRC https://github.com/sitaramc/gitolite.git
+ENV GIT_NOTIFIER_SRC https://github.com/rsmmr/git-notifier.git
 
 # Install dependencies and tweak the openssh config
 # Create "git" user and group for ssh logins
 RUN set -x \
- && apk add --no-cache git perl openssh \
+ && apk add --no-cache git perl openssh python \
  && sed -i -E -e "s|^#(HostKey.*/etc/ssh/)(ssh_host_.*_key)|\1keys/\2|" \
     -e "s/^#(PermitRootLogin|PasswordAuthentication|PrintMotd).*$/\1 no/" /etc/ssh/sshd_config \
  && addgroup git \
@@ -22,6 +23,10 @@ VOLUME /var/lib/git
 RUN git clone $GITOLITE_SRC /opt/gitolite \
  && /opt/gitolite/install -ln /usr/local/bin \
  && rm -rf /opt/gitolite/.git
+
+RUN git clone $GIT_NOTIFIER_SRC /opt/git-notifier \
+ && ln -s /opt/git-notifier/git-notifier /usr/local/bin/ \
+ && rm -rf /opt/git-notifier/.git
 
 # Entrypoint responsible for SSH host keys generation, and Gitolite data initialization
 COPY entrypoint.sh /
