@@ -9,7 +9,7 @@ Run gitolite on port 10022, using the current user's RSA key as the new admin,
 with the data stored in `/path/to/data` and the host ssh keys stored in
 `/path/to/keys`.
 
-    docker run --name gitolite \
+    docker run -d --name gitolite \
       -v /path/to/keys:/etc/ssh/keys \
       -v /path/to/data:/var/lib/gitolite \
       -p 10022:22 \
@@ -18,3 +18,5 @@ with the data stored in `/path/to/data` and the host ssh keys stored in
       jvstein/gitolite
 
 You can then add users and repos by following the [official guide](https://github.com/sitaramc/gitolite#adding-users-and-repos).
+
+    git clone ssh://git@localhost:10022/gitolite-admin
