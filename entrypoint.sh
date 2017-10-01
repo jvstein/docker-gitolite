@@ -23,7 +23,7 @@ if [ ! -f ~git/.ssh/authorized_keys ]; then
   else
     echo "You need to specify SSH_KEY on first run to setup gitolite"
     echo "You can also use SSH_KEY_NAME to specify the key name (optional)"
-    echo 'Example: docker run -e SSH_KEY="$(cat ~/.ssh/id_rsa.pub)" -e SSH_KEY_NAME="$(whoami)" jgiannuzzi/gitolite'
+    echo 'Example: docker run -e SSH_KEY="$(cat ~/.ssh/id_rsa.pub)" -e SSH_KEY_NAME="$(whoami)" jvstein/gitolite'
     exit 1
   fi
 fi
