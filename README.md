@@ -4,6 +4,12 @@ This image allows you to run an OpenSSH server in a container with OpenSSH, [git
 
 Based on Alpine Linux.
 
+## Variants
+ - [alpine34](https://github.com/jvstein/docker-gitolite/blob/alpine34/Dockerfile)
+ - [alpine35](https://github.com/jvstein/docker-gitolite/blob/alpine35/Dockerfile)
+ - [alpine36](https://github.com/jvstein/docker-gitolite/blob/alpine36/Dockerfile)
+ - [alpine37](https://github.com/jvstein/docker-gitolite/blob/alpine37/Dockerfile)
+
 ## Quick Start
 Run gitolite on port 10022, using the current user's RSA key as the new admin,
 with the data stored in `/path/to/data` and the host ssh keys stored in
