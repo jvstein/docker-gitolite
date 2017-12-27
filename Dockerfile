@@ -6,7 +6,7 @@ ENV GIT_NOTIFIER_SRC https://github.com/rsmmr/git-notifier.git
 # Install dependencies
 # Create "git" user and group for ssh logins
 RUN set -x \
- && apk add --no-cache git perl openssh python \
+ && apk add --no-cache git perl perl-json openssh python \
  && addgroup git \
  && adduser -D -G git -s /bin/sh -h /var/lib/git git \
  && passwd -u git
