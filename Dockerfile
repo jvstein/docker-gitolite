@@ -1,4 +1,4 @@
-FROM alpine:3.7
+FROM alpine:3.8
 
 ENV GITOLITE_SRC https://github.com/sitaramc/gitolite.git
 ENV GIT_NOTIFIER_SRC https://github.com/rsmmr/git-notifier.git
