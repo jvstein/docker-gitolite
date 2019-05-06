@@ -6,7 +6,13 @@ ENV GIT_NOTIFIER_SRC https://github.com/rsmmr/git-notifier.git
 # Install dependencies
 # Create "git" user and group for ssh logins
 RUN set -x \
- && apk add --no-cache git perl perl-json openssh python \
+ && apk add --no-cache \
+     curl \
+     git \
+     openssh \
+     perl \
+     perl-json \
+     python3 \
  && addgroup git \
  && adduser -D -G git -s /bin/sh -h /var/lib/git git \
  && passwd -u git
@@ -28,6 +34,7 @@ RUN git clone $GITOLITE_SRC /opt/gitolite \
  && rm -rf /opt/gitolite/.git
 
 RUN git clone $GIT_NOTIFIER_SRC /opt/git-notifier \
+ && ln -s /usr/bin/python3 /usr/bin/python \
  && ln -s /opt/git-notifier/git-notifier /usr/local/bin/ \
  && rm -rf /opt/git-notifier/.git
 
